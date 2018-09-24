@@ -6,9 +6,9 @@ class MainSystem{
 
   void welcome(){ //welcome message
     System.out.println("");
-    System.out.println("****************************************");
-    System.out.println(" Selamat Datang di Program Aplikasi SPL");
-    System.out.println("****************************************");
+    System.out.println("****************************************************");
+    System.out.println(" Selamat Datang di Program Aplikasi SPL-Interpolasi");
+    System.out.println("****************************************************");
     System.out.println("Program ini digunakan untuk menyelesaikan");
     System.out.println("sistem persamaan linier menggunakan");
     System.out.println("Gauss Elimination, Gauss-Jordan,");
@@ -59,16 +59,33 @@ class MainSystem{
   }
 
   void readkeyboard1(){ //Baca keyboard buat SPL
-    System.out.println("Masih kosong nih");
+    Scanner in = new Scanner(System.in);
+    System.out.print("Masukkan baris m (termasuk baris b): ");
+    int m = in.nextInt();
+    System.out.print("Masukkan kolom n (termasuk kolom b): ");
+    int n = in.nextInt();
+    Matrix matriks = new Matrix(m,n);
+    matriks.isimatrix(m,n);
+    System.out.println();
+    System.out.println("Isi matrix:");
+    matriks.tulismatrix(m,n);
   }
 
   void readkeyboard2(){ //Baca keyboard buat interpolasi
-    System.out.println("Jadi pengen kopi java");
+    Scanner in = new Scanner(System.in);
+    System.out.print("Masukkan banyak pasangan n: ");
+    int n = in.nextInt();
+    Matrix matriks = new Matrix(n,2);
+    matriks.isimatrix(n,n);
+    System.out.println();
+    System.out.println("Isi matrix:");
+    matriks.tulismatrix(n,n);
   }
 
   void choice(){ //Pilihan metode
     int menu = this.menu();
     Scanner in = new Scanner(System.in);
+    MainCalc calculation = new MainCalc();
     if(menu == 1){
       System.out.println("");
       System.out.println("Pilih metode yang ingin digunakan: ");
@@ -89,17 +106,17 @@ class MainSystem{
         } else{
           this.readfile1();
         }
-        //this.gauss();
+        calculation.gauss();
       } else{
         if(pilihan == 1){
           this.readkeyboard2();
         } else{
           this.readfile2();
         }
-        //this.gaussjordan();
+        calculation.gaussjordan();
       }
     } else if(menu == 2){
-      //this.interpolasi();
+      calculation.interpolasi();
     } else{
       System.exit(0);
     }
