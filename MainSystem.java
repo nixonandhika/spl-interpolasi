@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class MainSystem{
+public class MainSystem{
   MainSystem(){
   }
 
@@ -32,7 +32,11 @@ class MainSystem{
       System.out.print("Masukkan salah. Silahkan input lagi: ");
       input = in.nextInt();
     }
-    return input;
+    if(input == 3){
+      return 0;
+    } else{
+      return input;
+    }
   }
 
   int source(){ //fungsi buat pilihan source input
@@ -50,75 +54,21 @@ class MainSystem{
     return input;
   }
 
-  void readfile1(){ //Baca file buat SPL
-    System.out.println("Lagi test, Mas?");
-  }
-
-  void readfile2(){ //Baca file buat interpolasi
-    System.out.println("Nyoba-nyoba ya?");
-  }
-
-  void readkeyboard1(){ //Baca keyboard buat SPL
+  int choice(){ //Pilihan metode
     Scanner in = new Scanner(System.in);
-    System.out.print("Masukkan baris m (termasuk baris b): ");
-    int m = in.nextInt();
-    System.out.print("Masukkan kolom n (termasuk kolom b): ");
-    int n = in.nextInt();
-    Matrix matriks = new Matrix(m,n);
-    matriks.isimatrix(m,n);
-    System.out.println();
-    System.out.println("Isi matrix:");
-    matriks.tulismatrix(m,n);
-  }
-
-  void readkeyboard2(){ //Baca keyboard buat interpolasi
-    Scanner in = new Scanner(System.in);
-    System.out.print("Masukkan banyak pasangan n: ");
-    int n = in.nextInt();
-    Matrix matriks = new Matrix(n,2);
-    matriks.isimatrix(n,n);
-    System.out.println();
-    System.out.println("Isi matrix:");
-    matriks.tulismatrix(n,n);
-  }
-
-  void choice(){ //Pilihan metode
-    int menu = this.menu();
-    Scanner in = new Scanner(System.in);
-    MainCalc calculation = new MainCalc();
-    if(menu == 1){
-      System.out.println("");
-      System.out.println("Pilih metode yang ingin digunakan: ");
-      System.out.println("1. Metode eliminasi Gauss");
-      System.out.println("2. Metode eliminasi Gauss-Jordan");
-      System.out.println("");
-      System.out.print("Input: ");
-      int input = in.nextInt();
-      while(input != 1 && input != 2){
-        System.out.print("Masukkan salah. Silahkan input lagi: ");
-        input = in.nextInt();
-      }
-      System.out.println("");
-      int pilihan = this.source();
-      if(input == 1){
-        if(pilihan == 1){
-          this.readkeyboard1();
-        } else{
-          this.readfile1();
-        }
-        calculation.gauss();
-      } else{
-        if(pilihan == 1){
-          this.readkeyboard2();
-        } else{
-          this.readfile2();
-        }
-        calculation.gaussjordan();
-      }
-    } else if(menu == 2){
-      calculation.interpolasi();
-    } else{
-      System.exit(0);
+    System.out.println("");
+    System.out.println("Pilih metode yang ingin digunakan: ");
+    System.out.println("1. Metode eliminasi Gauss");
+    System.out.println("2. Metode eliminasi Gauss-Jordan");
+    System.out.println("");
+    System.out.print("Input: ");
+    int input = in.nextInt();
+    while(input != 1 && input != 2){
+      System.out.print("Masukkan salah. Silahkan input lagi: ");
+      input = in.nextInt();
     }
+    System.out.println("");
+    return input;
   }
+
 }
