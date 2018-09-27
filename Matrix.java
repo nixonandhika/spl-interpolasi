@@ -17,6 +17,11 @@ public class Matrix{
     this.matrix[i][j] = el;
   }
 
+  float isiel(int i, int j){
+    float el = this.matrix[i][j];
+    return el;
+  }
+
   void isimatrix(int m, int n){ //mengisi matrix
     Scanner in = new Scanner(System.in);
     for(int i = 0; i < m; i++){
