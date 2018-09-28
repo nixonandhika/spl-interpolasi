@@ -4,7 +4,7 @@ public class MainProgram{
   public static void main(String[] args){
     int row = 0, col = 0, sumber;
     int i, j;
-    float multiplier = 1;
+    double multiplier = 1;
     MainSystem system = new MainSystem();
     TextReader baca = new TextReader();
     MainCalc calculation = new MainCalc();
@@ -13,7 +13,6 @@ public class MainProgram{
     Scanner in = new Scanner(System.in);
     system.welcome();
     int pilihan = system.menu();
-
     if(pilihan == 1){ //Jika pilihan menu ke-1, jalanin augmented
       int metode = system.choice();
       sumber = system.source();
@@ -39,12 +38,14 @@ public class MainProgram{
 
       if(metode == 1){ //Jika metode ke-1, jalanin gauss
         //gauss
-        calculation.gauss();
+        N = calculation.gauss(M, "augmented.txt");
+        System.out.println();
+        System.out.println("Hasil matriks eselon:");
+        N.tulismatrix(row, col);
       } else{ //Jika metode ke-2, jalanin gauss-jordan
         //gauss-jordan
         calculation.gaussjordan();
       }
-
     } else if(pilihan == 2){ //Jika pilihan menu ke-2, jalanin interpolasi
       sumber = system.source();
       if(sumber == 1){ //jika sumber dari keyboard
@@ -68,7 +69,7 @@ public class MainProgram{
       }
       if(row == 1){
         N.addel(0, 0, 1);
-        N.addel(0, 1, M.isiel(0, 1));
+        N.addel(0, 1, M.content(0, 1));
         col = 2;
       } else{
         col = row + 1;
@@ -76,16 +77,16 @@ public class MainProgram{
           multiplier = 1;
           for(j = 0; j < col; j++){
             if(j > 0 && j < col - 1){
-              multiplier *= M.isiel(i,0);
+              multiplier *= M.content(i,0);
             }
             if(j == 0){
               N.addel(i, j, 1);
             } else if(j == 1){
-              N.addel(i, j, M.isiel(i, 0));
+              N.addel(i, j, M.content(i, 0));
             } else if(j < col - 1){
               N.addel(i, j, multiplier);
             } else{
-              N.addel(i, j, M.isiel(i, 1));
+              N.addel(i, j, M.content(i, 1));
             }
           }
         }

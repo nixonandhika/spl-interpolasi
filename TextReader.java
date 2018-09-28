@@ -12,7 +12,6 @@ public class TextReader{
       int row = this.getbaris(name);
       int col = this.getkolom(name);
       int j = 0, k = 0;
-      float[] temp = new float[row * col];
       for(int i = 0; i < row * col; i++){
         if(k == col){
           k = 0;
@@ -63,5 +62,9 @@ public class TextReader{
     } catch(Exception e){
       return 999;
     }
+  }
+
+  public void tulisFile(String var, float hasil){
+
   }
 }
