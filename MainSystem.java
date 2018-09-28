@@ -4,7 +4,7 @@ public class MainSystem{
   MainSystem(){
   }
 
-  void welcome(){ //welcome message
+  public void welcome(){ //welcome message
     System.out.println("");
     System.out.println("****************************************************");
     System.out.println(" Selamat Datang di Program Aplikasi SPL-Interpolasi");
@@ -19,7 +19,7 @@ public class MainSystem{
     System.out.println("");
   }
 
-  int menu(){ //fungsi buat pilihan menu
+  public int menu(){ //fungsi buat pilihan menu
     System.out.println("MENU:");
     System.out.println("1. Sistem persamaan Linier");
     System.out.println("2. Interpolasi Polinom");
@@ -39,7 +39,7 @@ public class MainSystem{
     }
   }
 
-  int source(){ //fungsi buat pilihan source input
+  public int source(){ //fungsi buat pilihan source input
     System.out.println("Pilih source program:");
     System.out.println("1. Keyboard");
     System.out.println("2. File");
@@ -54,11 +54,11 @@ public class MainSystem{
     return input;
   }
 
-  int choice(){ //Pilihan metode
+  public int choice(){ //Pilihan metode
     Scanner in = new Scanner(System.in);
     System.out.println("");
     System.out.println("Pilih metode yang ingin digunakan: ");
-    System.out.println("1. Metode eliminasi Gauss");
+    System.out.println("1. Metode eliminasi Gauss (dengan partial pivoting)");
     System.out.println("2. Metode eliminasi Gauss-Jordan");
     System.out.println("");
     System.out.print("Input: ");
@@ -71,4 +71,28 @@ public class MainSystem{
     return input;
   }
 
+  public void printhasil(double[] x, int col){ //Menuliskan hasil persamaan polinom ke layar
+    for(int i = 0; i < col; i++){
+      System.out.print("a");
+      System.out.print(i);
+      System.out.print(": ");
+      System.out.println(x[i]);
+    }
+  }
+
+  public void printpolinom(double[] x, int col){ //Menuliskan persamaan polinom berdasarkan hasil persamaan ke layar
+    System.out.print("P(x) = ");
+    for(int i = 0; i < col; i++){
+      System.out.print(x[i]);
+      if(i == 1){
+        System.out.print("x");
+      } else if(i > 1){
+        System.out.print("x^");
+        System.out.print(i);
+      }
+      if(i < col - 1){
+        System.out.print(" + ");
+      }
+    }
+  }
 }

@@ -2,11 +2,8 @@ public class MainCalc{
   MainCalc(){
   }
 
-  public Matrix gauss(Matrix M, String filename){
+  public Matrix gauss(Matrix M, int row, int col){
     /*Eliminasi Gauss dengan partial pivoting. Menghasilkan matriks eselon*/
-    TextReader baca = new TextReader();
-    int row = baca.getbaris(filename);
-    int col = baca.getkolom(filename);
     double hold;
 
     //Cari baris yang akan dijadikan pivot dan menukarnya
@@ -38,19 +35,46 @@ public class MainCalc{
     return M;
   }
 
+  public String checksolution(Matrix M, int row, int col){
+    int countcol = 0, countzerorow = 0;
+    for(int i = 0; i < row; i++){
+      countcol = 0;
+      for(int j = 0; j < col; j++){
+        if(M.content(i,j) != 0){
+          countcol++;
+        }
+        if(j == col - 1 && countcol == 0){
+          countzerorow++;
+        }
+      }
+    }
+
+    if(countcol == 1){ //Jika elemen baris terakhir nol semua kecuali paling kanan
+      return "inconsistent";
+    } else if(col - 1 == row - countzerorow){
+      return "unique";
+    } else{
+      return "infinite";
+    }
+  }
   public void gaussjordan(){
 
 
   }
 
-  public void interpolasi(){
-
+  public double interpolasi(double[] x, double input, int col){
+    double sum = 0, kali;
+    for(int i = 0; i < col; i++){
+      kali = 1;
+      for(int j = 0; j < i; j++){
+        kali *= input;
+      }
+      sum += x[i] * kali;
+    }
+    return sum;
   }
 
-  public double[] satusolusi(Matrix M, String filename){
-    TextReader baca = new TextReader();
-    int row = baca.getbaris(filename);
-    int col = baca.getkolom(filename);
+  public double[] satusolusi(Matrix M, int row, int col){
     double[] result = new double[row];
     double[] augmented = new double[row];
     for(int i = 0; i < row; i++){

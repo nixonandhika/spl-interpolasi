@@ -13,34 +13,26 @@ public class Matrix{
     }
   }
 
-  void addel(int i, int j, double el){ //prosedur buat menambahkan el sebagai elemen matrix
+  void addel(int i, int j, double el){ //prosedur untuk menambahkan el sebagai elemen matrix
     this.matrix[i][j] = el;
   }
 
-  void addline(int i, double[] k, int col){
+  void addline(int i, double[] k, int col){ //prosedur untuk menambahkan sebaris elemen matrix
     for(int j = 0; j < col; j++){
       this.matrix[i][j] = k[j];
     }
   }
 
-  double content(int i, int j){
+  double content(int i, int j){ //fungsi untuk mengeluarkan isi elemen matrix pada indeks tertentu
     double el = this.matrix[i][j];
     return el;
   }
 
-  double[] linecontent(int i, int col){
+  double[] linecontent(int i, int col){ //fungsi untuk mengeluarkan isi sebaris elemen matrix
     double[] el = new double[col];
     for(int j = 0; j < col; j++){
       el[j] = this.matrix[i][j];
       //System.out.println(this.matrix[i][j]);
-    }
-    return el;
-  }
-
-  double[] colcontent(int j, int row){
-    double[] el = new double[row];
-    for(int i = 0; i < row; i++){
-      el[i] = this.matrix[i][j];
     }
     return el;
   }
@@ -62,17 +54,5 @@ public class Matrix{
       }
       System.out.println();
     }
-  }
-
-  void tulisline(int i, int col){
-    for(int j = 0; j < col; j++){
-      System.out.print(this.matrix[i][j]);
-      System.out.print(" ");
-    }
-    System.out.println();
-  }
-
-  void tuliscontent(int i, int j){
-    System.out.println(this.matrix[i][j]);
   }
 }
