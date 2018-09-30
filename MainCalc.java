@@ -3,11 +3,13 @@ public class MainCalc{
   MainCalc(){
   }
 
-  public boolean checksingular(Matrix M, int row){
+  public boolean checksingular(Matrix M, int row, int col){
     boolean result = false;
     for(int i = 0; i < row; i++){
-      if (Math.abs(M.content(i,i)) <= EPSILON){
-        result = true;
+      if(i < col - 1){
+        if (Math.abs(M.content(i,i)) <= EPSILON){
+          result = true;
+        }
       }
     }
     return result;
@@ -27,28 +29,26 @@ public class MainCalc{
         }
       }
 
-      double[] temp = M.linecontent(p, col-1);
-      M.addline(p, M.linecontent(max, col), col-1);
-      M.addline(max, temp, col-1);
+      double[] temp = M.linecontent(p, col);
+      M.addline(p, M.linecontent(max, col), col);
+      M.addline(max, temp, col);
 
-      double t = M.content(p, col-1);
-      M.addel(p, col-1, M.content(max, col-1));
-      M.addel(max, col-1, t);
-
-      singular = checksingular(M, row);
+      singular = checksingular(M, row, col);
 
       //Pivot
       if(!singular){
         for(int i = p + 1; i < row; i++){
           double alpha = M.content(i, p) / M.content(p, p);
           M.addel(i, col-1, (M.content(i, col-1) - (alpha * M.content(p, col-1))));
-          for(int j = p; j < row; j++){
+          for(int j = p; j < col-1; j++){
             M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j)));
           }
         }
       }
     }
     for(int i = 0; i < row; i++){
+      first = true;
+      simpan = 1;
       for(int j = 0; j < col; j++){
         if(M.content(i,j) != 0 && first){
           simpan = M.content(i,j);
@@ -56,7 +56,6 @@ public class MainCalc{
         }
         M.addel(i, j, M.content(i, j) / simpan);
       }
-      first = true;
     }
     return M;
   }
@@ -83,7 +82,7 @@ public class MainCalc{
       return "infinite";
     }
   }
-  
+
   public void gaussjordan(){
 
   }
@@ -106,9 +105,9 @@ public class MainCalc{
     for(int i = 0; i < row; i++){
       augmented[i] = M.content(i, col - 1);
     }
-    for(int i = row - 1; i >= 0; i--){
+    for(int i = col - 1; i >= 0; i--){
       double sum = 0;
-      for(int j = i + 1; j < row; j++){
+      for(int j = i + 1; j < col - 1; j++){
         sum += M.content(i,j) * result[j];
       }
       result[i] = (augmented[i] - sum) / M.content(i,i);
