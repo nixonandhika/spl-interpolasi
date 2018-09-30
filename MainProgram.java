@@ -5,6 +5,7 @@ public class MainProgram{
     int row = 0, col = 0, sumber;
     int i, j;
     double multiplier = 1, taksiran, inputx;
+    boolean singular;
     String solutiontype;
     MainSystem system = new MainSystem();
     TextReader baca = new TextReader();
@@ -42,7 +43,7 @@ public class MainProgram{
         N = calculation.gauss(M, row, col); //Menyimpan matrix eselon hasil Gauss elimination
         System.out.println();
         System.out.println("Hasil matriks eselon:");
-        N.tulismatrix(row, col); //Menulis matrix eselon ke layar
+        N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
         solutiontype = calculation.checksolution(N, row, col); //Menyimpan tipe solusi (inconsistent, unique, infinite)
         System.out.println();
         System.out.print("Matriks memiliki tipe solusi: ");
@@ -126,7 +127,7 @@ public class MainProgram{
         N = calculation.gauss(N, row, col); //Matrix dikalkulasi menggunakan Gauss Elimination
         System.out.println();
         System.out.println("Hasil matriks eselon:");
-        N.tulismatrix(row, col); //Menuliskan hasil matriks eselon ke layar
+        N.tulismatrix(row, col); //Menuliskan hasil matrix eselon ke layar
         solutiontype = calculation.checksolution(N, row, col);
         System.out.println();
         System.out.print("Matriks memiliki tipe solusi: ");
@@ -146,7 +147,7 @@ public class MainProgram{
           System.out.println();
           System.out.println();
           System.out.print("Masukkan nilai x yang ingin ditaksir: ");
-          inputx = in.nextFloat(); //Meminta nilai x yang ingin ditaksir
+          inputx = in.nextDouble(); //Meminta nilai x yang ingin ditaksir
           taksiran = calculation.interpolasi(hasil, inputx, col-1); //Menyimpan nilai hasil taksiran x
           System.out.print("Hasil taksiran dari nilai ");
           System.out.print(inputx);

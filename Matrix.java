@@ -41,7 +41,7 @@ public class Matrix{
     Scanner in = new Scanner(System.in);
     for(int i = 0; i < m; i++){
       for(int j = 0; j < n; j++){
-        this.matrix[i][j] = in.nextFloat();
+        this.matrix[i][j] = in.nextDouble();
       }
     }
   }

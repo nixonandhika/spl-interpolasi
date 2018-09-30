@@ -17,7 +17,7 @@ public class TextReader{
           k = 0;
           j++;
         }
-        M.addel(j, k, in.nextFloat()); //Mengisi matrix M dengan nilai elemen yang ada di file
+        M.addel(j, k, in.nextDouble()); //Mengisi matrix M dengan nilai elemen yang ada di file
         k++;
       }
       in.close();
@@ -52,8 +52,8 @@ public class TextReader{
       for(int i = 0; i < row; i++){ //Looping untuk mendapatkan jumlah kolom yang ada di file
         Scanner readCol = new Scanner(in.nextLine());
         col = 0;
-        while(readCol.hasNextFloat()){
-          readCol.nextFloat();
+        while(readCol.hasNextDouble()){
+          readCol.nextDouble();
           col++;
         }
       }

@@ -1,10 +1,22 @@
 public class MainCalc{
+  private static final double EPSILON = 1e-10;
   MainCalc(){
+  }
+
+  public boolean checksingular(Matrix M, int row){
+    boolean result = false;
+    for(int i = 0; i < row; i++){
+      if (Math.abs(M.content(i,i)) <= EPSILON){
+        result = true;
+      }
+    }
+    return result;
   }
 
   public Matrix gauss(Matrix M, int row, int col){
     /*Eliminasi Gauss dengan partial pivoting. Menghasilkan matriks eselon*/
-    double hold;
+    double hold, simpan = 1;
+    boolean singular, first = true;
 
     //Cari baris yang akan dijadikan pivot dan menukarnya
     for(int p = 0; p < row; p++){
@@ -23,14 +35,28 @@ public class MainCalc{
       M.addel(p, col-1, M.content(max, col-1));
       M.addel(max, col-1, t);
 
+      singular = checksingular(M, row);
+
       //Pivot
-      for(int i = p + 1; i < row; i++){
-        double alpha = M.content(i, p) / M.content(p, p);
-        M.addel(i, col-1, (M.content(i, col-1) - (alpha * M.content(p, col-1))));
-        for(int j = p; j < row; j++){
-          M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j)));
+      if(!singular){
+        for(int i = p + 1; i < row; i++){
+          double alpha = M.content(i, p) / M.content(p, p);
+          M.addel(i, col-1, (M.content(i, col-1) - (alpha * M.content(p, col-1))));
+          for(int j = p; j < row; j++){
+            M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j)));
+          }
         }
       }
+    }
+    for(int i = 0; i < row; i++){
+      for(int j = 0; j < col; j++){
+        if(M.content(i,j) != 0 && first){
+          simpan = M.content(i,j);
+          first = false;
+        }
+        M.addel(i, j, M.content(i, j) / simpan);
+      }
+      first = true;
     }
     return M;
   }
@@ -57,8 +83,8 @@ public class MainCalc{
       return "infinite";
     }
   }
+  
   public void gaussjordan(){
-
 
   }
 

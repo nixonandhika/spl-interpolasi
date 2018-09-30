@@ -58,7 +58,7 @@ public class MainSystem{
     Scanner in = new Scanner(System.in);
     System.out.println("");
     System.out.println("Pilih metode yang ingin digunakan: ");
-    System.out.println("1. Metode eliminasi Gauss (dengan partial pivoting)");
+    System.out.println("1. Metode eliminasi Gauss");
     System.out.println("2. Metode eliminasi Gauss-Jordan");
     System.out.println("");
     System.out.print("Input: ");
