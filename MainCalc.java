@@ -1,27 +1,14 @@
 public class MainCalc{
-  private static final double EPSILON = 1e-10;
   MainCalc(){
-  }
-
-  public boolean checksingular(Matrix M, int row, int col){
-    boolean result = false;
-    for(int i = 0; i < row; i++){
-      if(i < col - 1){
-        if (Math.abs(M.content(i,i)) <= EPSILON){
-          result = true;
-        }
-      }
-    }
-    return result;
   }
 
   public Matrix gauss(Matrix M, int row, int col){
     /*Eliminasi Gauss dengan partial pivoting. Menghasilkan matriks eselon*/
-    double hold, simpan = 1;
+    double hold, simpan = 1.0;
     boolean singular, first = true;
-
+    int temporary = 0;
     //Cari baris yang akan dijadikan pivot dan menukarnya
-    for(int p = 0; p < row; p++){
+    for(int p = 0; p < row; p++){ //Mencari baris matriks dengan nilai absolut pivot tertinggi
       int max = p;
       for(int i = p + 1; i < row; i++){
         if(Math.abs(M.content(i, p)) > Math.abs(M.content(max, p))){
@@ -29,24 +16,40 @@ public class MainCalc{
         }
       }
 
+      //Menukar baris p dengan baris dengan nilai absolut pivot tertinggi
       double[] temp = M.linecontent(p, col);
       M.addline(p, M.linecontent(max, col), col);
       M.addline(max, temp, col);
 
-      singular = checksingular(M, row, col);
-
-      //Pivot
-      if(!singular){
+      //Jika diagonal utama pada baris p bukan nol
+      if(M.content(p,p) != 0){
         for(int i = p + 1; i < row; i++){
           double alpha = M.content(i, p) / M.content(p, p);
-          M.addel(i, col-1, (M.content(i, col-1) - (alpha * M.content(p, col-1))));
+          M.addel(i, col-1, (M.content(i, col-1) - (alpha * M.content(p, col-1)))); //Mengurangi elemen yang di-augmentasi
           for(int j = p; j < col-1; j++){
-            M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j)));
+            M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j))); //Mengurangi elemen pada matrix yang tidak di-augmentasi
+          }
+        }
+      } else{ //Jika diagonal utama pada baris p adalah nol. Dibuat terpisah agar tidak terjadi pembagian dengan nol
+        int i = 1;
+        while(first && i < row){ //Looping untuk mencari elemen pivot pada baris p yang bukan nol
+          if(M.content(p, p + i) != 0){
+            first = false;
+            simpan = M.content(p,p+i); //Menyimpan nilai pivot yang bukan nol
+            temporary = p+i; //Menyimpan indeks ditemukannya nilai pivot yang bukan nol
+          }
+          i++;
+        }
+        for(i = p + 1; i < row; i++){
+          double alpha = M.content(i, temporary) / simpan;
+          M.addel(i, col-1, (Math.round((M.content(i, col-1) - alpha * M.content(p, col-1)) * 1000 / 1000))); //Mengurangi elemen yang di-augmentasi
+          for(int j = temporary; j < col-1; j++){
+            M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j))); //Mengurangi elemen pada matrix yang tidak di-augmentasi
           }
         }
       }
     }
-    for(int i = 0; i < row; i++){
+    for(int i = 0; i < row; i++){ //Loop untuk membuat pivot semua baris yang bukan nol menjadi satu
       first = true;
       simpan = 1;
       for(int j = 0; j < col; j++){
@@ -105,12 +108,14 @@ public class MainCalc{
     for(int i = 0; i < row; i++){
       augmented[i] = M.content(i, col - 1);
     }
-    for(int i = col - 1; i >= 0; i--){
+    for(int i = row - 1; i >= 0; i--){
       double sum = 0;
-      for(int j = i + 1; j < col - 1; j++){
+      for(int j = i + 1; j < row; j++){
         sum += M.content(i,j) * result[j];
       }
-      result[i] = (augmented[i] - sum) / M.content(i,i);
+      if(i < col-1){
+        result[i] = (augmented[i] - sum) / M.content(i,i);
+      }
     }
     return result;
   }
