@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 public class Matrix{
   double[][] matrix = new double[10][10];
@@ -47,9 +48,10 @@ public class Matrix{
   }
 
   void tulismatrix(int m, int n){ //menulis isi matrix
+    DecimalFormat df = new DecimalFormat("#.########");
     for(int i = 0; i < m; i++){
       for(int j = 0; j < n; j++){
-        System.out.print(this.matrix[i][j]);
+        System.out.print(df.format(this.matrix[i][j]));
         System.out.print(" ");
       }
       System.out.println();

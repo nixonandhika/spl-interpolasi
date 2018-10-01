@@ -44,27 +44,38 @@ public class MainProgram{
         System.out.println();
         System.out.println("Hasil matriks eselon:");
         N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
-        solutiontype = calculation.checksolution(N, row, col); //Menyimpan tipe solusi (inconsistent, unique, infinite)
-        System.out.println();
-        System.out.print("Matriks memiliki tipe solusi: ");
-        System.out.println(solutiontype); //Menulis tipe solusi ke layar
-        System.out.println();
-        if(solutiontype == "inconsistent"){ //Jika tipe solusi inconsistent, maka tidak ada solusi dari SPL
-          System.out.println("Matriks tidak memiliki solusi!");
-          System.exit(0);
-        } else if(solutiontype == "unique"){ //Jika tipe solusi unique, maka ada 1 solusi dari SPL
-          double[] hasil = new double[col];
-          hasil = calculation.satusolusi(N, row, col); //Menyimpan hasil dari persamaan
-          System.out.println("Hasil persamaan:");
-          system.printhasil(hasil, col-1); //Menulis hasil persamaan ke layar
-          System.exit(0);
-        } else{ //Jika tipe solusi infinite, maka ada infinite solusi dari SPL
-          //banyaksolusi
-        }
       } else{ //Jika metode ke-2, jalanin gauss-jordan
+        //liat gauss NANTI HAPUSSSSSSSSS
+        N = calculation.gauss(M, row, col); //Menyimpan matrix eselon hasil Gauss elimination
+        System.out.println();
+        System.out.println("Hasil matriks eselon:");
+        N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
+        
         //gauss-jordan
-        calculation.gaussjordan();
+        N = calculation.gaussjordan(M, row, col);
+        System.out.println();
+        System.out.println("Hasil matriks eselon tereduksi:");
+        N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
       }
+
+      solutiontype = calculation.checksolution(N, row, col); //Menyimpan tipe solusi (inconsistent, unique, infinite)
+      System.out.println();
+      System.out.print("Matriks memiliki tipe solusi: ");
+      System.out.println(solutiontype); //Menulis tipe solusi ke layar
+      System.out.println();
+      if(solutiontype == "inconsistent"){ //Jika tipe solusi inconsistent, maka tidak ada solusi dari SPL
+        System.out.println("Matriks tidak memiliki solusi!");
+        System.exit(0);
+      } else if(solutiontype == "unique"){ //Jika tipe solusi unique, maka ada 1 solusi dari SPL
+        double[] hasil = new double[col];
+        hasil = calculation.satusolusi(N, row, col); //Menyimpan hasil dari persamaan
+        System.out.println("Hasil persamaan:");
+        system.printhasil(hasil, col-1); //Menulis hasil persamaan ke layar
+        System.exit(0);
+      } else{ //Jika tipe solusi infinite, maka ada infinite solusi dari SPL
+        //banyaksolusi
+      }
+
     } else if(pilihan == 2){ //Jika pilihan menu ke-2, jalanin interpolasi
       sumber = system.source();
       if(sumber == 1){ //jika sumber dari keyboard

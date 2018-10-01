@@ -42,7 +42,7 @@ public class MainCalc{
         }
         for(i = p + 1; i < row; i++){
           double alpha = M.content(i, temporary) / simpan;
-          M.addel(i, col-1, (Math.round((M.content(i, col-1) - alpha * M.content(p, col-1)) * 1000 / 1000))); //Mengurangi elemen yang di-augmentasi
+          M.addel(i, col-1, (Math.round((M.content(i, col-1) - alpha * M.content(p, col-1))) * 1000.0/1000.0)); //Mengurangi elemen yang di-augmentasi
           for(int j = temporary; j < col-1; j++){
             M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j))); //Mengurangi elemen pada matrix yang tidak di-augmentasi
           }
@@ -86,8 +86,82 @@ public class MainCalc{
     }
   }
 
-  public void gaussjordan(){
+  public Matrix gaussjordan(Matrix M, int row, int col){
+    Matrix N = gauss(M, row, col);
+    int i = 0, j = 1, k = 0, temp1 = 0, temp2 = 0;
+    int[] pivot = new int[row];
+    int last = 0;
 
+    pivot = searchsatu(N, row, col-1);
+    last = pivot.length - 1;
+    temp1 = pivot[last];
+    System.out.print("isi temp1: ");
+    System.out.println(temp1);
+
+    M.tulismatrix(row, col);
+    while(j < col-1){
+      k = 0;
+      if(j <= temp1){
+        i = j;
+        temp2 = pivot[j];
+        System.out.print("isi j posisi 1: ");
+        System.out.println(j);
+        System.out.print("isi temp2: ");
+        System.out.println(temp2);
+      }
+      while(i < row && k < temp2){
+        if(N.content(i, j) != 0){
+          N = kurangBrs(N, k, i, j, col);
+        }
+        k++;
+      }
+      j++;
+    }
+
+    return N;
+  }
+
+  public int[] searchsatu(Matrix M, int row, int col){
+    //Mencari index leading point(pivot) dari matriks M
+    int i = 0, j = 0, temp = 0;
+    int[] idxSatu = new int[col];
+    boolean found = false;
+    int last = 0;
+
+    for(i = 0; i < col; i++){ //inisialisasi nilai
+      idxSatu[i] = 0;
+    }
+
+    i = 0;
+    while(i < col){
+      j = row - 1;
+      while(j > -1 && found == false){
+        if(M.content(j,i) == 1 && j >= temp){
+          temp = j;
+          idxSatu[last] = j;
+          last++;
+          found = true;
+        }
+        j--;
+      }
+      found = false;
+      i++;
+    }
+
+    int[] idx = new int[last];
+    for(i = 0; i < last; i++){
+      idx[i] = idxSatu[i];
+    }
+
+    return idx;
+  }
+
+  public Matrix kurangBrs(Matrix M, int idxRow, int targetRow, int idxCol, int Nkol){
+    double alpha = M.content(idxRow, idxCol) / M.content(targetRow, idxCol);
+    for(int j = 0; j < Nkol; j++){
+      M.addel((idxRow), j, (M.content(idxRow, j) - (alpha * M.content(targetRow, j))));
+    }
+    return M;
   }
 
   public double interpolasi(double[] x, double input, int col){
