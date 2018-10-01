@@ -70,29 +70,4 @@ public class MainSystem{
     System.out.println("");
     return input;
   }
-
-  public void printhasil(double[] x, int col){ //Menuliskan hasil persamaan polinom ke layar
-    for(int i = 0; i < col; i++){
-      System.out.print("a");
-      System.out.print(i);
-      System.out.print(": ");
-      System.out.println(x[i]);
-    }
-  }
-
-  public void printpolinom(double[] x, int col){ //Menuliskan persamaan polinom berdasarkan hasil persamaan ke layar
-    System.out.print("P(x) = ");
-    for(int i = 0; i < col; i++){
-      System.out.print(x[i]);
-      if(i == 1){
-        System.out.print("x");
-      } else if(i > 1){
-        System.out.print("x^");
-        System.out.print(i);
-      }
-      if(i < col - 1){
-        System.out.print(" + ");
-      }
-    }
-  }
 }

@@ -9,6 +9,7 @@ public class MainProgram{
     String solutiontype;
     MainSystem system = new MainSystem();
     TextReader baca = new TextReader();
+    TextWriter tulis = new TextWriter();
     MainCalc calculation = new MainCalc();
     Matrix M = new Matrix(); //Sebagai matrix awal
     Matrix N = new Matrix(); //Matrix untuk dimanipulasi
@@ -62,8 +63,9 @@ public class MainProgram{
       } else if(solutiontype == "unique"){ //Jika tipe solusi unique, maka ada 1 solusi dari SPL
         double[] hasil = new double[col];
         hasil = calculation.satusolusi(N, row, col); //Menyimpan hasil dari persamaan
-        System.out.println("Hasil persamaan:");
-        system.printhasil(hasil, col-1); //Menulis hasil persamaan ke layar
+        tulis.writefile(hasil, "augmented.txt", row, col-1);
+        //System.out.println("Hasil persamaan:");
+        //system.printhasilaugmented(hasil, col-1); //Menulis hasil persamaan ke layar
         System.exit(0);
       } else{ //Jika tipe solusi infinite, maka ada infinite solusi dari SPL
         //banyaksolusi
@@ -91,19 +93,21 @@ public class MainProgram{
         System.out.println();
       }
       if(row == 1){ //Jika hanya ada satu pasangan point, maka y akan tetap sama untuk semua x
-        N.addel(0, 0, 1);
-        N.addel(0, 1, M.content(0, 1));
-        col = 2;
-        System.out.println("Sistem persamaan lanjar:");
-        N.tulismatrix(row, col); //Menulis sistem persamaan lanjar yang terbentuk ke layar
-        System.out.println();
-        System.out.println("Hasil persamaan:");
-        System.out.print("a0 = ");
-        System.out.println(N.content(0,0));
-        System.out.println("Persamaan polinom: ");
-        System.out.print("P(x) = ");
-        System.out.println(N.content(0,1));
-        System.out.println("Nilai y akan tetap sama untuk x apa pun");
+        System.out.println("Baris harus lebih dari 1");
+        System.exit(0);
+        //N.addel(0, 0, 1);
+        //N.addel(0, 1, M.content(0, 1));
+        //col = 2;
+        //System.out.println("Sistem persamaan lanjar:");
+        //N.tulismatrix(row, col); //Menulis sistem persamaan lanjar yang terbentuk ke layar
+        //System.out.println();
+        //System.out.println("Hasil persamaan:");
+        //System.out.print("a0 = ");
+        //System.out.println(N.content(0,0));
+        //System.out.println("Persamaan polinom: ");
+        //System.out.print("P(x) = ");
+        //System.out.println(N.content(0,1));
+        //System.out.println("Nilai y akan tetap sama untuk x apa pun");
       } else{
           col = row + 1; //jumlah kolom = jumlah baris + 1 karena akan terbentuk matriks augmented polinom
           for(i = 0; i < row; i++){ //Looping untuk membentuk matrix N sebagai sistem persamaan lanjar dari matriks M
@@ -143,20 +147,22 @@ public class MainProgram{
         } else if(solutiontype == "unique"){ //Jika tipe solusi unique, matrix memiliki 1 solusi
           double[] hasil = new double[col];
           hasil = calculation.satusolusi(N, row, col); //Menyimpan hasil dari persamaan
-          System.out.println("Hasil persamaan:");
-          system.printhasil(hasil, col-1); //Menuliskan hasil persamaan ke layar
+          //System.out.println("Hasil persamaan:");
+          //system.printhasilinterpolasi(hasil, col-1); //Menuliskan hasil persamaan ke layar
+          //System.out.println();
+          //System.out.println("Persamaan polinom: ");
+          //system.printpolinom(hasil, col-1); //Menuliskan persamaan polinom yang terbentuk ke layar
           System.out.println();
-          System.out.println("Persamaan polinom: ");
-          system.printpolinom(hasil, col-1); //Menuliskan persamaan polinom yang terbentuk ke layar
-          System.out.println();
-          System.out.println();
-          System.out.print("Masukkan nilai x yang ingin ditaksir: ");
-          inputx = in.nextDouble(); //Meminta nilai x yang ingin ditaksir
-          taksiran = calculation.interpolasi(hasil, inputx, col-1); //Menyimpan nilai hasil taksiran x
-          System.out.print("Hasil taksiran dari nilai ");
-          System.out.print(inputx);
-          System.out.print(" : ");
-          System.out.println(taksiran); //Menuliskan hasil taksiran ke layar
+          tulis.writefile(hasil, "interpolasi.txt", row, col-1);
+          //System.out.println();
+          //System.out.print("Masukkan nilai x yang ingin ditaksir: ");
+          //inputx = in.nextDouble(); //Meminta nilai x yang ingin ditaksir
+          //taksiran = calculation.interpolasi(hasil, inputx, col-1); //Menyimpan nilai hasil taksiran x
+          //System.out.print("Hasil taksiran dari nilai ");
+          //System.out.print(inputx);
+          //System.out.print(" : ");
+          //System.out.println(taksiran); //Menuliskan hasil taksiran ke layar
+          System.exit(0);
         } else{
         //banyak solusi
         }
