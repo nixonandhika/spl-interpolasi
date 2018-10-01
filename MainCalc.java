@@ -60,6 +60,14 @@ public class MainCalc{
         M.addel(i, j, M.content(i, j) / simpan);
       }
     }
+    int i = row - 1;
+    for(int j = 0; j < col; j++){
+      if(M.content(i,j) != 0){
+        double[] temp = M.linecontent(i-1, col);
+        M.addline(i-1, M.linecontent(i, col), col);
+        M.addline(i, temp, col);
+      }
+    }
     return M;
   }
 
@@ -95,19 +103,12 @@ public class MainCalc{
     pivot = searchsatu(N, row, col-1);
     last = pivot.length - 1;
     temp1 = pivot[last];
-    System.out.print("isi temp1: ");
-    System.out.println(temp1);
 
-    M.tulismatrix(row, col);
     while(j < col-1){
       k = 0;
       if(j <= temp1){
         i = j;
         temp2 = pivot[j];
-        System.out.print("isi j posisi 1: ");
-        System.out.println(j);
-        System.out.print("isi temp2: ");
-        System.out.println(temp2);
       }
       while(i < row && k < temp2){
         if(N.content(i, j) != 0){

@@ -37,7 +37,6 @@ public class MainProgram{
         System.out.println("Isi dari Matrix: ");
         M.tulismatrix(row, col); //Menulis matrix yang terbentuk ke layar
       }
-
       if(metode == 1){ //Jika metode ke-1, jalanin gauss
         //gauss
         N = calculation.gauss(M, row, col); //Menyimpan matrix eselon hasil Gauss elimination
@@ -45,12 +44,6 @@ public class MainProgram{
         System.out.println("Hasil matriks eselon:");
         N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
       } else{ //Jika metode ke-2, jalanin gauss-jordan
-        //liat gauss NANTI HAPUSSSSSSSSS
-        N = calculation.gauss(M, row, col); //Menyimpan matrix eselon hasil Gauss elimination
-        System.out.println();
-        System.out.println("Hasil matriks eselon:");
-        N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
-        
         //gauss-jordan
         N = calculation.gaussjordan(M, row, col);
         System.out.println();
