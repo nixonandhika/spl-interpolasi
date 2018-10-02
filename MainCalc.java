@@ -1,18 +1,21 @@
+/*Kelas ini mengatur segala macam operasi perhitungan*/
+
 public class MainCalc{
   MainCalc(){
   }
 
   public Matrix gauss(Matrix M, int row, int col){
-    /*Eliminasi Gauss dengan partial pivoting. Menghasilkan matriks eselon*/
+    /*Fungsi ini merupakan Eliminasi Gauss dengan partial pivoting. Akan menghasilkan matriks eselon*/
     double hold, simpan = 1.0;
-    boolean singular, first = true;
+    boolean first = true;
     int temporary = 0;
+
     //Cari baris yang akan dijadikan pivot dan menukarnya
     for(int p = 0; p < row; p++){ //Mencari baris matriks dengan nilai absolut pivot tertinggi
       int max = p;
       for(int i = p + 1; i < row; i++){
         if(Math.abs(M.content(i, p)) > Math.abs(M.content(max, p))){
-          max = i;
+          max = i; //Menyimpan indeks baris tertinggi
         }
       }
 
@@ -25,14 +28,14 @@ public class MainCalc{
       if(M.content(p,p) != 0){
         for(int i = p + 1; i < row; i++){
           double alpha = M.content(i, p) / M.content(p, p);
-          M.addel(i, col-1, (M.content(i, col-1) - (alpha * M.content(p, col-1)))); //Mengurangi elemen yang di-augmentasi
+          M.addel(i, col-1, ((M.content(i, col-1) - (alpha * M.content(p, col-1))))); //Mengurangi elemen yang di-augmentasi
           for(int j = p; j < col-1; j++){
             M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j))); //Mengurangi elemen pada matrix yang tidak di-augmentasi
           }
         }
       } else{ //Jika diagonal utama pada baris p adalah nol. Dibuat terpisah agar tidak terjadi pembagian dengan nol
         int i = 1;
-        while(first && i < row){ //Looping untuk mencari elemen pivot pada baris p yang bukan nol
+        while(first && p+i < row){ //Looping untuk mencari elemen pivot pada baris p yang bukan nol
           if(M.content(p, p + i) != 0){
             first = false;
             simpan = M.content(p,p+i); //Menyimpan nilai pivot yang bukan nol
@@ -42,13 +45,14 @@ public class MainCalc{
         }
         for(i = p + 1; i < row; i++){
           double alpha = M.content(i, temporary) / simpan;
-          M.addel(i, col-1, (Math.round((M.content(i, col-1) - alpha * M.content(p, col-1))) * 1000.0/1000.0)); //Mengurangi elemen yang di-augmentasi
+          M.addel(i, col-1, (Math.round((M.content(i, col-1) - alpha * M.content(p, col-1))*100000000d)/100000000d)); //Mengurangi elemen yang di-augmentasi
           for(int j = temporary; j < col-1; j++){
             M.addel(i, j, M.content(i,j) - (alpha * M.content(p, j))); //Mengurangi elemen pada matrix yang tidak di-augmentasi
           }
         }
       }
     }
+
     for(int i = 0; i < row; i++){ //Loop untuk membuat pivot semua baris yang bukan nol menjadi satu
       first = true;
       simpan = 1;
@@ -60,7 +64,8 @@ public class MainCalc{
         M.addel(i, j, M.content(i, j) / simpan);
       }
     }
-    int i = row - 1;
+
+    int i = row - 1; //Untuk mengatasi suatu bug
     for(int j = 0; j < col; j++){
       if(M.content(i,j) != 0){
         double[] temp = M.linecontent(i-1, col);
@@ -71,7 +76,7 @@ public class MainCalc{
     return M;
   }
 
-  public String checksolution(Matrix M, int row, int col){
+  public String checksolution(Matrix M, int row, int col){ //Fungsi untuk mengirimkan tipe solusi
     int countcol = 0, countzerorow = 0;
     for(int i = 0; i < row; i++){
       countcol = 0;
@@ -94,15 +99,15 @@ public class MainCalc{
     }
   }
 
-  public Matrix gaussjordan(Matrix M, int row, int col){
+  public Matrix gaussjordan(Matrix M, int row, int col){ //Fungsi ini merupakan Eliminasi Gauss-Jordan. Menghasilkan matriks eselon tereduksi
     Matrix N = gauss(M, row, col);
     int i = 0, j = 1, k = 0, temp1 = 0, temp2 = 0;
     int[] pivot = new int[row];
     int last = 0;
 
-    pivot = searchsatu(N, row, col-1);
-    last = pivot.length - 1;
-    temp1 = pivot[last];
+    pivot = searchsatu(N, row, col-1); //menyimpan letak baris semua pivot
+    last = pivot.length - 1; //indeks terakhir pivot
+    temp1 = pivot[last]; //menyimpan nilai pivot pada indeks terakhir
 
     while(j < col-1){
       k = 0;
@@ -112,7 +117,7 @@ public class MainCalc{
       }
       while(i < row && k < temp2){
         if(N.content(i, j) != 0){
-          N = kurangBrs(N, k, i, j, col);
+          N = kurangBrs(N, k, i, j, col); //Mengurangi satu baris dengan baris lainnya
         }
         k++;
       }
@@ -158,14 +163,16 @@ public class MainCalc{
   }
 
   public Matrix kurangBrs(Matrix M, int idxRow, int targetRow, int idxCol, int Nkol){
+    //Mengurangi elemen pada baris idxRow dengan elemen pada baris targetRow * alpha
     double alpha = M.content(idxRow, idxCol) / M.content(targetRow, idxCol);
     for(int j = 0; j < Nkol; j++){
-      M.addel((idxRow), j, (M.content(idxRow, j) - (alpha * M.content(targetRow, j))));
+      M.addel((idxRow), j, ((M.content(idxRow, j) - (alpha * M.content(targetRow, j)))));
     }
     return M;
   }
 
   public double interpolasi(double[] x, double input, int col){
+    //Fungsi untuk menghitung hasil taksiran (polinom)
     double sum = 0, kali;
     for(int i = 0; i < col; i++){
       kali = 1;
@@ -178,6 +185,7 @@ public class MainCalc{
   }
 
   public double[] satusolusi(Matrix M, int row, int col){
+    //Fungsi untuk mengirimkan solusi Matriks jika hasilnya unique
     double[] result = new double[row];
     double[] augmented = new double[row];
     for(int i = 0; i < row; i++){
@@ -195,10 +203,115 @@ public class MainCalc{
     return result;
   }
 
-  public String[] banyaksolusi(Matrix M){
-    char alphabet = 'p';
-    String[] solusi = new String[1];
-    solusi[1] = "whyyyy";
+  public String[] banyaksolusi(Matrix M, int row, int col){
+    //Fungsi untuk mengirimkan solusi Matriks jika hasilnya infinite/parametrik
+    char[] daftar;
+    daftar = new char[] {'p','q','r','s','t','u','v','w'}; //array of char untuk menyimpan karakter yang akan diassign ke variabel
+    String[] solusi = new String[col]; //String untuk di-output. Menyimpan hasil persamaan dalam parametrik
+    int[] k = new int[col]; //Menyimpan indeks dari variabel konstanta
+    int indeksK = 0; //menyimpan indeks dari k
+    int indekssolusi = 0; //Menyimpan indeks dari variabel yang tidak diassign karakter
+    int temp = indeksK; //menyimpan indeks maksimal k
+    int indeksdaftar = 0; //sebagai indeks untuk assign suatu variabel dengan karakter
+    int hitungvar = 0; //Variabel untuk menghitung banyaknya variabel yang sudah dilalui dalam suatu baris
+    double[] konstanta = new double[col]; //Menyimpan nilai dari variabel konstanta
+    for(int j = 0; j < col; j++){
+      konstanta[j] = -999; //Simpan konstanta
+      k[j] = -999; //Simpan indeks
+      solusi[j]  = "zzz"; //Simpan string solusi
+    }
+
+    for(int i = 0; i < row; i++){
+      if(singlevar(M,i,col)){
+        for(int j = 0; j < col-1; j++){
+          if(M.content(i,j) != 0){
+            konstanta[j] = M.content(i, col - 1) / M.content(i,j); //Simpan nilai konstanta
+            k[indeksK] = j; //Simpan indeks konstanta
+            indeksK++;
+          }
+        }
+      }
+    }
+
+    temp = indeksK;
+    for(int i = row - 1; i >= 0; i--){ //Loop untuk Mengoperasikan variabel dengan konstanta dan assign huruf
+      indeksK = 0;
+      hitungvar = 0; //Menghitung berapa banyak variabel yang sudah dilalui dalam sebaris
+      int banyakvar = countvar(M, i, col); //Menyimpan banyaknya jumlah variabel dalam suatu baris
+      if(banyakvar > 1){ //Jika baris memiliki variable bukan nol melebihi 1 baru dijalankan
+        int j = col-2;
+        while(j >= i){
+          if(indeksK < temp && M.content(i, k[indeksK]) != 0){ //Mengoperasikan variable yang memiliki konstanta
+            M.addel(i, col-1, M.content(i, col - 1) - (M.content(i, k[indeksK]) * konstanta[k[indeksK]])); //Melakukan operasi terhadap augmentasi
+            M.addel(i, k[indeksK], 0);
+            hitungvar++;
+            indeksK++;
+          } else{
+            if(M.content(i,j) != 0){
+              if(solusi[j] == "zzz" && hitungvar < banyakvar - 1){
+                solusi[j] = daftar[indeksdaftar] + "";
+                indeksdaftar++;
+              } else if(solusi[j] == "zzz" && hitungvar == banyakvar - 1){
+                solusi[j] = "aaa"; //Mengisi dengan "aaa" untuk membedakan yang kosong dengan yang tidak diassign karakter
+              }
+              hitungvar++;
+            }
+          }
+          j--;
+        }
+      }
+    }
+
+    for(int i = 0; i < temp; i++){ //Loop untuk menggabungkan variable hasil operasi dan assignment biasa
+      solusi[k[i]] = konstanta[k[i]] + "";
+    }
+
+    for(int i = row - 1; i >= 0; i--){ //Loop untuk mengisi array solusi yang masih kosong karena membutuhkan operasi variabel parametrik
+      int banyakvar = countvar(M, i, col); //Menyimpan banyak variabel dalam suatu baris
+      hitungvar = 0;
+      if(banyakvar > 1){
+        for(int j = i; j < col - 1; j++){
+          if(solusi[j] == "aaa"){ //Jika merupakan variabel yang tidak diassign karakter
+            if(M.content(i, col-1) != 0){
+              solusi[j] = M.content(i, col-1) + " + ";
+            } else{
+              solusi[j] = "";
+            }
+            indekssolusi = j; //Menyimpan indeks dari variabel yang tidak diassign karakter
+          } else if(M.content(i,j) != 0){
+            solusi[indekssolusi] += -M.content(i,j) + "*" + solusi[j];
+            if(hitungvar < banyakvar - 2){
+              solusi[indekssolusi] += " + ";
+            }
+            hitungvar++;
+          }
+        }
+      }
+      indekssolusi = 0;
+    }
+
     return solusi;
+  }
+
+  public boolean singlevar(Matrix M, int row, int col){
+    //Menghasilkan true jika di sebaris, hanya terdapat 1 variabel yang bukan nol
+    int count = 0;
+    for(int i = 0; i < col-1; i++){
+      if(M.content(row, i) != 0){
+        count++;
+      }
+    }
+    return count == 1;
+  }
+
+  public int countvar(Matrix M, int row, int col){
+    //Mengirimkan banyaknya variabel pada suatu baris
+    int count = 0;
+    for(int i = 0; i < col-1; i++){
+      if(M.content(row, i) != 0){
+        count++;
+      }
+    }
+    return count;
   }
 }

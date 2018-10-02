@@ -2,6 +2,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/*Kelas ini untuk membaca isi dari file eksternal dan menyimpannya ke matriks*/
+
 public class TextReader{
 
   public Matrix readFile(String filename){ //Fungsi buat baca matrix dari file
@@ -22,12 +24,12 @@ public class TextReader{
       }
       in.close();
       return M;
-    } catch(Exception e){
+    } catch(Exception e){ //Jika terjadi error saat membaca file
       return null;
     }
   }
 
-  public int getbaris(String filename){ //Selektor baris
+  public int getbaris(String filename){ //Selektor baris. Mengirim jumlah baris dari matrix di file
     try{
       File f = new File(filename);
       Scanner in = new Scanner(f);
@@ -43,7 +45,7 @@ public class TextReader{
     }
   }
 
-  public int getkolom(String filename){ //Selektor kolom
+  public int getkolom(String filename){ //Selektor kolom. Mengirim jumlah kolom dari matrix di file
     try{
       File f = new File(filename);
       Scanner in = new Scanner(f);
@@ -62,9 +64,5 @@ public class TextReader{
     } catch(Exception e){
       return 999;
     }
-  }
-
-  public void tulisFile(String var, float hasil){
-
   }
 }

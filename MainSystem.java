@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+/*Kelas ini untuk interface dan pilihan-pilihan di awal*/
+
 public class MainSystem{
   MainSystem(){
   }
@@ -28,7 +30,7 @@ public class MainSystem{
     System.out.print("Input: ");
     Scanner in = new Scanner(System.in);
     int input = in.nextInt();
-    while(input != 1 && input != 2 && input != 3){
+    while(input != 1 && input != 2 && input != 3){ //1 untuk SPL, 2 untuk Interpolasi, 3 untuk Keluar
       System.out.print("Masukkan salah. Silahkan input lagi: ");
       input = in.nextInt();
     }
@@ -47,7 +49,7 @@ public class MainSystem{
     System.out.print("Input: ");
     Scanner in = new Scanner(System.in);
     int input = in.nextInt();
-    while(input != 1 && input != 2){
+    while(input != 1 && input != 2){ //1 untuk sumber dari keyboard dan 2 untuk sumber dari file
       System.out.print("Masukkan salah. Silahkan input lagi: ");
       input = in.nextInt();
     }
@@ -63,7 +65,7 @@ public class MainSystem{
     System.out.println("");
     System.out.print("Input: ");
     int input = in.nextInt();
-    while(input != 1 && input != 2){
+    while(input != 1 && input != 2){ //1 untuk metode Gauss, 2 untuk metode Gauss-Jordan
       System.out.print("Masukkan salah. Silahkan input lagi: ");
       input = in.nextInt();
     }

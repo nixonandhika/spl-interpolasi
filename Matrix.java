@@ -1,8 +1,10 @@
 import java.util.Scanner;
 import java.text.DecimalFormat;
 
+/*Kelas ini untuk mengurus semua hal yang berhubungan dengan matrix dan manipulasinya*/
+
 public class Matrix{
-  double[][] matrix = new double[10][10];
+  double[][] matrix = new double[15][15];
   int baris;
   int kolom;
 
@@ -14,7 +16,7 @@ public class Matrix{
     }
   }
 
-  public void addel(int i, int j, double el){ //prosedur untuk menambahkan el sebagai elemen matrix
+  public void addel(int i, int j, double el){ //prosedur untuk menambahkan el sebagai elemen matrix (menggantikan el lama)
     this.matrix[i][j] = el;
   }
 
@@ -33,7 +35,6 @@ public class Matrix{
     double[] el = new double[col];
     for(int j = 0; j < col; j++){
       el[j] = this.matrix[i][j];
-      //System.out.println(this.matrix[i][j]);
     }
     return el;
   }
