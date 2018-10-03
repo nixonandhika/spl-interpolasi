@@ -57,6 +57,7 @@ public class MainProgram{
         N.tulismatrix(row, col); //Menulis hasil matrix eselon ke layar
       }
       //--------------------------------------------------------------------------------------------------
+      tulis.writematrix(N, row, col, "augmented.txt");
       solutiontype = calculation.checksolution(N, row, col); //Menyimpan tipe solusi (inconsistent, unique, infinite)
       System.out.println();
       System.out.print("Matriks memiliki tipe solusi: ");
@@ -134,12 +135,12 @@ public class MainProgram{
 
         System.out.println("Sistem persamaan lanjar:");
         N.tulismatrix(row, col); //Menuliskan matrix sistem persamaan lanjar ke layar
-        System.out.println();
         //interpolasi
         N = calculation.gauss(N, row, col); //Menyimpan matrix hasil kalkulasi menggunakan Gauss Elimination
         System.out.println();
         System.out.println("Hasil matriks eselon:");
         N.tulismatrix(row, col); //Menuliskan hasil matrix eselon ke layar
+        tulis.writematrix(N, row, col, "interpolasi.txt");
         solutiontype = calculation.checksolution(N, row, col); //Menyimpan tipe solusi (inconsistent, unique, infinite)
         System.out.println();
         System.out.print("Matriks memiliki tipe solusi: ");

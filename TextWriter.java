@@ -11,7 +11,7 @@ public class TextWriter{
       Scanner in = new Scanner(System.in);
       double taksiran = 0, input = 0;
       if(filename == "augmented.txt"){ //Jika program mengoperasikan SPL
-        BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilaugmented.txt"));
+        BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilaugmented.txt", true));
         System.out.println("Hasil persamaan:");
         tulis.write("Hasil persamaan");
         tulis.newLine();
@@ -42,7 +42,7 @@ public class TextWriter{
       }
         tulis.close();
       } else{ //Jika program mengoperasikan Interpolasi
-        BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilinterpolasi.txt"));
+        BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilinterpolasi.txt", true));
         if(tipe[0] == "unique"){ //Jika tipe solusi adalah unique, menggunakan array of double
           System.out.println("Hasil persamaan:");
           tulis.write("Hasil persamaan");
@@ -101,6 +101,44 @@ public class TextWriter{
       }
     } catch(Exception e){ //Jika terjadi error saat penulisan ke file
       System.out.println("Terjadi ERROR");
+    }
+  }
+
+  public void writematrix(Matrix M, int row, int col, String filename){
+    try{
+      if(filename == "augmented.txt"){
+        BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilaugmented.txt"));
+        tulis.write("Hasil matrix: ");
+        tulis.newLine();
+        for(int i = 0; i < row; i++){
+          for(int j = 0; j < col; j++){
+            tulis.write(M.content(i,j) + "");
+            if(j != col - 1){
+              tulis.write(" ");
+            }
+          }
+          tulis.newLine();
+        }
+        tulis.newLine();
+        tulis.close();
+      } else{
+        BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilinterpolasi.txt"));
+        tulis.write("Hasil matrix: ");
+        tulis.newLine();
+        for(int i = 0; i < row; i++){
+          for(int j = 0; j < col; j++){
+            tulis.write(M.content(i,j) + "");
+            if(j != col - 1){
+              tulis.write(" ");
+            }
+          }
+          tulis.newLine();
+        }
+        tulis.newLine();
+        tulis.close();
+      }
+    } catch(Exception e){
+      System.out.println("Tterjadi ERROR");
     }
   }
 }

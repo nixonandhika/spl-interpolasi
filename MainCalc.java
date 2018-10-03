@@ -9,6 +9,7 @@ public class MainCalc{
     double hold, simpan = 1.0;
     boolean first = true;
     int temporary = 0;
+    int zero = 0;
 
     //Cari baris yang akan dijadikan pivot dan menukarnya
     for(int p = 0; p < row; p++){ //Mencari baris matriks dengan nilai absolut pivot tertinggi
@@ -65,15 +66,29 @@ public class MainCalc{
       }
     }
 
-    int i = row - 1; //Untuk mengatasi suatu bug
-    for(int j = 0; j < col; j++){
-      if(M.content(i,j) != 0){
-        double[] temp = M.linecontent(i-1, col);
-        M.addline(i-1, M.linecontent(i, col), col);
-        M.addline(i, temp, col);
+    for(int i = 0; i < row - 1; i++){ //Untuk mengecek kembali baris nol berada di paling bawah
+      zero = countrowzero(M, i, col);
+      if(zero == col){
+        for(int j = 0; j < col; j++){
+          double[] temp = M.linecontent(i+1, col);
+          M.addline(i+1, M.linecontent(i, col), col);
+          M.addline(i, temp, col);
+        }
       }
     }
+
+
     return M;
+  }
+
+  public int countrowzero(Matrix M, int row, int col){
+    int count = 0;
+    for(int j = 0; j < col; j++){
+      if(M.content(row,j) == 0){
+        count++;
+      }
+    }
+    return count;
   }
 
   public String checksolution(Matrix M, int row, int col){ //Fungsi untuk mengirimkan tipe solusi
@@ -279,7 +294,7 @@ public class MainCalc{
             }
             indekssolusi = j; //Menyimpan indeks dari variabel yang tidak diassign karakter
           } else if(M.content(i,j) != 0){
-            solusi[indekssolusi] += -M.content(i,j) + "*" + solusi[j];
+            solusi[indekssolusi] += "(" + -M.content(i,j)  + "*" + solusi[j] + ")";
             if(hitungvar < banyakvar - 2){
               solusi[indekssolusi] += " + ";
             }
