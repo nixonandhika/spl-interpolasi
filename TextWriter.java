@@ -88,12 +88,12 @@ public class TextWriter{
           taksiran = calculation.interpolasi(x, input, col); //Menyimpan hasil taksiran dari x
           System.out.println();
           tulis.newLine();
-          System.out.print("Hasil taksiran dari nilai ");
-          tulis.write("Hasil taksiran dari nilai ");
+          System.out.print("Hasil taksiran dari nilai x = ");
+          tulis.write("Hasil taksiran dari nilai x = ");
           System.out.print(input);
           tulis.write(input + "");
-          System.out.print(": ");
-          tulis.write(": ");
+          System.out.print(" adalah ");
+          tulis.write(" adalah ");
           System.out.println(taksiran); //Menulis hasil taksiran ke layar dan file
           tulis.write(taksiran + "");
           tulis.close();
