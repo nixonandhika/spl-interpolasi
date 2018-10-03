@@ -105,6 +105,7 @@ public class TextWriter{
   }
 
   public void writematrix(Matrix M, int row, int col, String filename){
+    //Prosedur ini untuk menuliskan matrix hasil operasi ke file
     try{
       if(filename == "augmented.txt"){
         BufferedWriter tulis = new BufferedWriter(new FileWriter("hasilaugmented.txt"));
