@@ -6,7 +6,7 @@ public class MainCalc{
 
   public Matrix gauss(Matrix M, int row, int col){
     /*Fungsi ini merupakan Eliminasi Gauss dengan partial pivoting. Akan menghasilkan matriks eselon*/
-    double hold, simpan = 1.0;
+    double simpan = 1.0;
     boolean first = true;
     int temporary = 0;
     int zero = 0;
@@ -77,7 +77,6 @@ public class MainCalc{
       }
     }
 
-
     return M;
   }
 
@@ -104,18 +103,20 @@ public class MainCalc{
         }
       }
     }
-
-    if(countcol == 1){ //Jika elemen baris terakhir nol semua kecuali paling kanan
+    if(col - 1 > row - countzerorow){ //Jika elemen baris terakhir nol semua kecuali paling kanan
+      return "infinite";
+    } else if(countcol == 1){ //Jika elemen baris terakhir nol semua kecuali paling kanan
       return "inconsistent";
     } else if(col - 1 == row - countzerorow){
       return "unique";
     } else{
-      return "infinite";
+      return "inconsistent";
     }
   }
 
   public Matrix gaussjordan(Matrix M, int row, int col){ //Fungsi ini merupakan Eliminasi Gauss-Jordan. Menghasilkan matriks eselon tereduksi
     Matrix N = gauss(M, row, col);
+    N.tulismatrix(row,col);
     int i = 0, j = 1, k = 0, temp1 = 0, temp2 = 0;
     int[] pivot = new int[row];
     int last = 0;
@@ -128,7 +129,7 @@ public class MainCalc{
       k = 0;
       if(j <= temp1){
         i = j;
-        temp2 = pivot[j];
+        temp2 = pivot[i];
       }
       while(i < row && k < temp2){
         if(N.content(i, j) != 0){
@@ -169,12 +170,7 @@ public class MainCalc{
       i++;
     }
 
-    int[] idx = new int[last];
-    for(i = 0; i < last; i++){
-      idx[i] = idxSatu[i];
-    }
-
-    return idx;
+    return idxSatu;
   }
 
   public Matrix kurangBrs(Matrix M, int idxRow, int targetRow, int idxCol, int Nkol){
@@ -235,7 +231,6 @@ public class MainCalc{
       k[j] = -999; //Simpan indeks
       solusi[j]  = "zzz"; //Simpan string solusi
     }
-
     for(int i = 0; i < row; i++){
       if(singlevar(M,i,col)){
         for(int j = 0; j < col-1; j++){
@@ -294,7 +289,7 @@ public class MainCalc{
             }
             indekssolusi = j; //Menyimpan indeks dari variabel yang tidak diassign karakter
           } else if(M.content(i,j) != 0){
-            solusi[indekssolusi] += "(" + -M.content(i,j)  + "*" + solusi[j] + ")";
+            solusi[indekssolusi] += "(" + -M.content(i,j)  + "*" + "(" + solusi[j] + ")" + ")";
             if(hitungvar < banyakvar - 2){
               solusi[indekssolusi] += " + ";
             }

@@ -139,7 +139,7 @@ public class TextWriter{
         tulis.close();
       }
     } catch(Exception e){
-      System.out.println("Tterjadi ERROR");
+      System.out.println("Terjadi ERROR");
     }
   }
 }
