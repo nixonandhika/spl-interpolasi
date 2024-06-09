@@ -1,3 +1,5 @@
+# College Work - Linear Interpolation with Java
+
 Sistem Persamaan Linear - Interpolasi\
 \
 Program untuk menyelesaikan persoalan sistem persamaan linear (SPL) dengan menggunakan eliminasi gauss/gauss-jordan yang kemudian digunakan untuk menyelesaikan persoalan interpolasi\
